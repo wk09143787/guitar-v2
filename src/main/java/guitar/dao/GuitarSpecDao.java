@@ -1,6 +1,6 @@
-package java.guitar.dao;
+package guitar.dao;
 
-import java.guitar.entity.GuitarSpec;
+import guitar.entity.GuitarSpec;
 
 public interface GuitarSpecDao {
 	/**

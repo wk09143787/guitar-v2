@@ -1,13 +1,13 @@
-package java.guitar.dao;
+package guitar.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.guitar.dbutil.Dbutil;
-import java.guitar.entity.Builder;
-import java.guitar.entity.GuitarSpec;
-import java.guitar.entity.Type;
-import java.guitar.entity.Wood;
+import guitar.dbutil.Dbutil;
+import guitar.entity.Builder;
+import guitar.entity.GuitarSpec;
+import guitar.entity.Type;
+import guitar.entity.Wood;
 
 public class GuitarSpecDaoImpl implements GuitarSpecDao {
 

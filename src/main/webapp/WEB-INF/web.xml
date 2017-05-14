@@ -18,7 +18,7 @@
  	</filter-mapping>
 	
 	<welcome-file-list>
-	 	<welcome-file>/WEB-INF/content/searchGuitar.jsp</welcome-file>
+	 	<welcome-file>/WEB-INF/content/index.jsp</welcome-file>
 	</welcome-file-list>
 
 </web-app>

@@ -1,4 +1,4 @@
-package java.guitar.dbutil;
+package guitar.dbutil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

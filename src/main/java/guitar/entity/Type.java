@@ -1,4 +1,4 @@
-package java.guitar.entity;
+package guitar.entity;
 
 public enum Type { 
 

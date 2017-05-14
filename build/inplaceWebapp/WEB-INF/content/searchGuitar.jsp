@@ -23,7 +23,7 @@
 			</tr>	
 			<tr>
 				<td>ºóÄ¾:</td>
-				<td><input type="text" name="backWord"/></td>
+				<td><input type="text" name="backWood"/></td>
 			</tr>
 			<tr>
 				<td>Ç°Ä¾:</td>

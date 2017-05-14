@@ -1,6 +1,6 @@
-package java.guitar.dao;
+package guitar.dao;
 
-import java.guitar.entity.Guitar;
+import guitar.entity.Guitar;
 import java.util.List;
 
 

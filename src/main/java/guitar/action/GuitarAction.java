@@ -1,4 +1,4 @@
-package java.guitar.action;
+package guitar.action;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,23 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import java.guitar.entity.Builder;
-import java.guitar.entity.Guitar;
-import java.guitar.entity.Type;
-import java.guitar.entity.Wood;
+import guitar.dao.GuitarDao;
+import guitar.dao.GuitarDaoImpl;
+import guitar.entity.Builder;
+import guitar.entity.Guitar;
+import guitar.entity.GuitarSpec;
+import guitar.entity.Inventory;
+import guitar.entity.Type;
+import guitar.entity.Wood;
+import guitar.service.GuitarService;
+import guitar.service.GuitarServiceImpl;
 
 
 
@@ -24,17 +35,37 @@ public class GuitarAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Builder builder;
+	private String builder;
 	private String model;
-	private Type type;
-	private int numStrings;
-	private Wood backWood;
-	private Wood topWood;
+	private String type;
+	private String numStrings;
+	private String backWood;
+	private String topWood;
 	private List<Guitar> matchingGuitars = new LinkedList<Guitar>();
 	private List<Object> maps =new ArrayList<Object>(); 
 	Map<String, Object> map=new HashMap<String,Object>();
 	
 	public String search(){
+		GuitarDao guitarDao = new GuitarDaoImpl();
+		
+		GuitarService guitarService = new GuitarServiceImpl();
+		
+		guitarService.setGuitarDao(guitarDao);
+		
+		Inventory inventory = new Inventory();
+		
+		
+		
+		
+		inventory.setGuitars(guitarService.getAll());
+		
+		GuitarSpec guitarSpec = new GuitarSpec(Builder.valueOf( builder ),  model, Type.valueOf(type) ,
+                Integer.valueOf(numStrings) , Wood.valueOf(backWood) , Wood.valueOf(topWood) );
+		
+		matchingGuitars = inventory.search(guitarSpec);
+		
+		System.out.println(matchingGuitars);
+		
 		for( Guitar guitar : matchingGuitars ){
 			map.put("builder", guitar.getSpec().getBuilder().toString());
 			map.put("model", guitar.getSpec().getModel());
@@ -43,8 +74,12 @@ public class GuitarAction extends ActionSupport {
 			map.put("backWood", guitar.getSpec().getBackWood().toString());
 			map.put("topWood", guitar.getSpec().getTopWood().toString());
 			map.put("price", guitar.getPrice());
-			maps.add(map);
+			maps.add(map);			
 		}
+		ActionContext ctx=ActionContext.getContext();
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		request.setAttribute("map", maps);
 		return SUCCESS;	
 	}
 	
@@ -56,30 +91,73 @@ public class GuitarAction extends ActionSupport {
 	public void setModel(String model) {
 		this.model = model;
 	}
-	public Type getType() {
+	
+	public String getType() {
 		return type;
 	}
-	public void setType(Type type) {
+
+
+
+	public void setType(String type) {
 		this.type = type;
 	}
-	public int getNumStrings() {
+
+
+
+	public String getNumStrings() {
 		return numStrings;
 	}
-	public void setNumStrings(int numStrings) {
+
+
+
+	public void setNumStrings(String numStrings) {
 		this.numStrings = numStrings;
 	}
-	public Wood getBackWood() {
+
+
+
+	public String getBackWood() {
 		return backWood;
 	}
-	public void setBackWood(Wood backWood) {
+
+
+
+	public void setBackWood(String backWood) {
 		this.backWood = backWood;
 	}
-	public Wood getTopWood() {
+
+
+
+	public String getTopWood() {
 		return topWood;
 	}
-	public void setTopWood(Wood topWood) {
+
+
+
+	public void setTopWood(String topWood) {
 		this.topWood = topWood;
 	}
+
+
+
+	public List<Object> getMaps() {
+		return maps;
+	}
+
+
+
+	public void setMaps(List<Object> maps) {
+		this.maps = maps;
+	}
+
+
+
+	public void setBuilder(String builder) {
+		this.builder = builder;
+	}
+
+
+
 	public List<Guitar> getMatchingGuitars() {
 		return matchingGuitars;
 	}
@@ -95,15 +173,11 @@ public class GuitarAction extends ActionSupport {
 
 
 
-	public Builder getBuilder() {
+	public String getBuilder() {
 		return builder;
 	}
 
 
-
-	public void setBuilder(Builder builder) {
-		this.builder = builder;
-	}
 	
 	
 	
